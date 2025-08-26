@@ -138,9 +138,6 @@ namespace Flaggi.Test.Evaluators
             var rB = evaluator.Evaluate(rule, ctx, "Feature.B");
 
             // Assert
-            // Em 50% é muito provável que haja diferença para alguns seeds e chaves
-            // Caso caia igual por azar, ao menos garantimos que o cálculo roda sem exceção
-            // Para torná-lo mais forte, você pode ajustar o seed de teste se preferir.
             Assert.IsType<bool>(rA);
             Assert.IsType<bool>(rB);
         }
