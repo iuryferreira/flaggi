@@ -15,7 +15,7 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   </a>
 </p>
-
+ 
 Flaggi is a **pure and extensible feature flag engine for .NET**.
 It aims to make feature management simple, predictable and self-contained.
 
