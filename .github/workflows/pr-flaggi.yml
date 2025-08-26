@@ -43,9 +43,8 @@ jobs:
         env:
           PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
         run: |
-          REPORTS=$(find . -type f -name "coverage.cobertura.xml" | tr '\n' ';')
           reportgenerator \
-            -reports:"$REPORTS" \
+            -reports:"**/coverage.cobertura.xml" \
             -targetdir:"coverage-report" \
             -reporttypes:"Html;Cobertura;lcov;MarkdownSummary"
 
@@ -60,7 +59,7 @@ jobs:
         with:
           script: |
             const cov = `${{ steps.readcov.outputs.total_line }}`;
-            const body = `**✅ Coverage report (net9.0)** - Total line coverage: **${cov}%** <details> <summary>See HTML report</summary> Artifacts: flaggi-coverage-9.0 → open coverage-report/index.html </details>`;
+            const body = `**✅ Coverage report (net9.0)** - Total line coverage: **${cov}%** <details><summary>See HTML report</summary> Artifacts: flaggi-coverage-9.0 → open coverage-report/index.html </details>`;
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
             const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number });
