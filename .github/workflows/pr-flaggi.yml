@@ -1,0 +1,120 @@
+name: PR Check - Flaggi
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "src/Flaggi/**"
+      - "Flaggi.sln"
+      - ".github/workflows/pr-flaggi.yml"
+      - "README.md"
+
+jobs:
+  build-test-pack:
+    name: Build, Test, Coverage, Pack
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        dotnet: [ "6.0.x", "7.0.x", "8.0.x", "9.0.x" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Cache NuGet
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ matrix.dotnet }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-${{ matrix.dotnet }}-
+
+      - name: Restore
+        run: dotnet restore Flaggi.sln
+
+      - name: Build
+        run: dotnet build Flaggi.sln --configuration Release --no-restore
+
+      - name: Test with coverage
+        run: |
+          dotnet test Flaggi.sln \
+            --configuration Release \
+            --no-build \
+            --collect:"XPlat Code Coverage" \
+            -l "trx;LogFileName=test-results.trx" \
+            /p:CoverletOutputFormat=cobertura \
+            /p:ExcludeByFile="**/bin/**;**/obj/**" \
+            /p:Threshold=85 /p:ThresholdType=line /p:ThresholdStat=total
+
+      - name: Install ReportGenerator
+        run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+      - name: Generate coverage report (HTML, Cobertura, LCOV, Markdown)
+        env:
+          PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
+        run: |
+          REPORTS=$(find . -type f -name "coverage.cobertura.xml" | tr '\n' ';')
+          reportgenerator \
+            -reports:"$REPORTS" \
+            -targetdir:"coverage-report" \
+            -reporttypes:"Html;Cobertura;lcov;MarkdownSummary"
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: flaggi-coverage-${{ matrix.dotnet }}
+          path: |
+            coverage-report/**
+            **/TestResults/**/test-results.trx
+
+      # Extrai cobertura apenas em net9.0 para comentar
+      - name: Read total line coverage from MarkdownSummary
+        id: readcov
+        if: matrix.dotnet == '9.0.x'
+        run: |
+          TOTAL=$(grep -i "Line coverage" coverage-report/Summary.md | sed -E 's/.*: *([0-9]+\.[0-9]+)%.*/\1/')
+          echo "total_line=$TOTAL" >> $GITHUB_OUTPUT
+
+      - name: Comment coverage on PR
+        if: matrix.dotnet == '9.0.x'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const cov = `${{ steps.readcov.outputs.total_line }}`;
+            const body = `**✅ Coverage report (net9.0)** - Total line coverage: **${cov}%** <details><summary>See HTML report</summary> Artifacts: flaggi-coverage-9.0.x → open coverage-report/index.html </details>`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number });
+            const marker = 'Coverage report (net9.0)';
+            const previous = comments.find(c => c.user.type === 'Bot' && c.body && c.body.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner, repo,
+                comment_id: previous.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body
+              });
+            }
+
+      - name: Pack (validation only)
+        run: dotnet pack src/Flaggi/Flaggi.csproj --configuration Release --no-build
+
+      - name: Upload nupkg as PR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flaggi-pr-nupkg-${{ matrix.dotnet }}
+          path: artifacts/packages/**/*.nupkg
