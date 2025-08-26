@@ -51,8 +51,9 @@ jobs:
       - name: Read total line coverage
         id: readcov
         run: |
-          TOTAL=$(grep -i "Line coverage" coverage-report/Summary.md | sed -E 's/.*: *([0-9]+\.[0-9]+)%.*/\1/')
-          echo "total_line=$TOTAL" >> $GITHUB_OUTPUT
+          TOTAL=$(xmllint --xpath 'string(/coverage/@line-rate)' coverage-report/Cobertura.xml)
+          PERCENT=$(awk "BEGIN {print $TOTAL*100}")
+          echo "total_line=$PERCENT" >> $GITHUB_OUTPUT
 
       - name: Comment coverage on PR
         uses: actions/github-script@v7
