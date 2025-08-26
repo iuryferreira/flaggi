@@ -152,7 +152,7 @@ public class FeatureEngineTest
         // Arrange
         var failingRule = new FeatureRule("AlwaysFail", new Dictionary<string, object?>());
         var passingRule = new FeatureRule("AlwaysPass", new Dictionary<string, object?>());
-        var feature = new Feature("TestFeature", true, new[] { failingRule, passingRule });
+        var feature = new Feature("TestFeature", true, [failingRule, passingRule]);
         var ctx = new FeatureContext("user1", [], new Dictionary<string, object?>());
 
         var mockFail = new Mock<IRuleEvaluator>();
@@ -178,7 +178,7 @@ public class FeatureEngineTest
         // Arrange
         var rule1 = new FeatureRule("R1", new Dictionary<string, object?>());
         var rule2 = new FeatureRule("R2", new Dictionary<string, object?>());
-        var feature = new Feature("MultiRuleFeature", true, new[] { rule1, rule2 });
+        var feature = new Feature("MultiRuleFeature", true, [rule1, rule2]);
         var ctx = new FeatureContext("user1", [], new Dictionary<string, object?>());
 
         var mockEval1 = new Mock<IRuleEvaluator>();
