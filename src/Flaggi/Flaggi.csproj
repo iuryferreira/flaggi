@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Nuget Informations">
+    <Description>Flaggi - pure feature flag engine for .NET</Description>
+    <PackageId>Flaggi</PackageId>
+  </PropertyGroup>
+
+</Project>
