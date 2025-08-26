@@ -1,0 +1,84 @@
+name: Release - Flaggi
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  release:
+    name: Create Release from csproj version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Extract version from csproj
+        id: get_version
+        run: |
+          VERSION=$(xmllint --xpath "string(//Project/PropertyGroup[@Label='NuGet Information']/Version)" src/Flaggi/Flaggi.csproj)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          TAG="v${{ steps.get_version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists. Skipping..."
+          else
+            git tag $TAG
+            git push origin $TAG
+          fi
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          TAG="v${{ steps.get_version.outputs.version }}"
+          PREV_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            echo "No previous tag, grabbing full history."
+            CHANGELOG=$(git log --pretty=format:"- %s" )
+          else
+            CHANGELOG=$(git log $PREV_TAG..HEAD --pretty=format:"- %s")
+          fi
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Restore dependencies
+        run: dotnet restore src/Flaggi/Flaggi.csproj
+
+      - name: Build
+        run: dotnet build src/Flaggi/Flaggi.csproj --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test src/Flaggi/Flaggi.csproj --configuration Release --no-build --verbosity normal
+
+      - name: Pack
+        run: dotnet pack src/Flaggi/Flaggi.csproj --configuration Release --no-build
+
+      - name: Publish to NuGet.org
+        run: dotnet nuget push ./artifacts/packages/**/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
+      - name: Publish to GitHub Packages
+        run: dotnet nuget push ./artifacts/packages/**/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Flaggi v${{ steps.get_version.outputs.version }}
+          body: |
+            ## 📦 Changelog
+            ${{ steps.changelog.outputs.changelog }}
+          files: ./artifacts/packages/**/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

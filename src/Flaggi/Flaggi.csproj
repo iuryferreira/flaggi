@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>..\..\artifacts\packages</PackageOutputPath>
+
+    <AssemblyName>Flaggi</AssemblyName>
+    <RootNamespace>Flaggi</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet Information">
+    <PackageId>Flaggi</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Iury Ferreira</Authors>
+    <Company></Company>
+    <Product>Flaggi</Product>
+    <Description>Flaggi — the pure and extensible feature flag engine for .NET.
+      Includes core abstractions, engine, in-memory store, JSON file store, and default rule
+      evaluators.</Description>
+    <PackageTags>feature-flags flags toggle engine dotnet blazor aspnetcore configuration</PackageTags>
+    <RepositoryUrl>https://github.com/iuryferreira/flaggi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/iuryferreira/flaggi</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+    <None Include="../../docs/icon.png" Pack="true" PackagePath="\" Link="icon.png" />
+  </ItemGroup>
+
+</Project>
