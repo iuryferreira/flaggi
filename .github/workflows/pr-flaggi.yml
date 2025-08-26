@@ -34,7 +34,7 @@ jobs:
         run: dotnet build Flaggi.sln --configuration Release --no-restore
 
       - name: Test with coverage
-        run: dotnet test Flaggi.sln --configuration Release --no-build --collect:"XPlat Code Coverage" -l "trx;LogFileName=test-results.trx" /p:CoverletOutputFormat=cobertura  /p:ExcludeByFile="**/bin/**;**/obj/**" /p:Threshold=85 /p:ThresholdType=line /p:ThresholdStat=total
+        run: dotnet test Flaggi.sln --configuration Release --no-build --collect:"XPlat Code Coverage" -l "trx;LogFileName=test-results.trx" --settings coverlet.runsettings
 
       - name: Install ReportGenerator
         run: dotnet tool install -g dotnet-reportgenerator-globaltool
