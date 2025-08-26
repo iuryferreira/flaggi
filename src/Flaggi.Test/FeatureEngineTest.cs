@@ -126,10 +126,10 @@ public class FeatureEngineTest
     public async Task EvaluateAsync_ShouldReturnDisabled_WhenFeatureIsDisabled()
     {
         // Arrange
-        var feature = new Feature("DisabledFeature", false, new List<FeatureRule>
-    {
+        var feature = new Feature("DisabledFeature", false,
+    [
         new FeatureRule("AlwaysPass", new Dictionary<string, object?>())
-    });
+    ]);
         var ctx = new FeatureContext("user1", [], new Dictionary<string, object?>());
 
         var mockEvaluator = new Mock<IRuleEvaluator>();
