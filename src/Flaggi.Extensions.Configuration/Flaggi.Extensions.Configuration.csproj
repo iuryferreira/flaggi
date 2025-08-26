@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Description">
+    <PackageId>Flaggi.Extensions.Configuration</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Iury</Authors>
+    <Company></Company>
+    <Product>Flaggi.Extensions.Configuration</Product>
+    <Description>Configuration integration for Flaggi feature flags. Provides a
+      ConfigurationFeatureStore that binds features from IConfiguration.</Description>
+    <PackageTags>feature-flags configuration appsettings azure-app-configuration flaggi</PackageTags>
+    <RepositoryUrl>https://github.com/iuryferreira/flaggi</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flaggi\Flaggi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
+  </ItemGroup>
+
+</Project>
