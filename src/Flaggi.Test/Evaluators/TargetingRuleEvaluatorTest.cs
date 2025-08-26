@@ -1,4 +1,3 @@
-using Flaggi;
 using Flaggi.Evaluators;
 
 namespace Flaggi.Test.Evaluators;
