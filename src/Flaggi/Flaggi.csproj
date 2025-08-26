@@ -30,11 +30,12 @@
     <PackageProjectUrl>https://github.com/iuryferreira/flaggi</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
-  <!-- Inclui README no pacote -->
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="docs/icon.png" Pack="true" PackagePath="\" Link="icon.png" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,20 @@
-# 🚩 Flaggi · Feature Flags for .NET
+<p align="center">
+  <img src="docs/flaggi.png" alt="Flaggi Logo" width="200"/>
+</p>
+
+<h1 align="center">🚩 Flaggi · Feature Flags for .NET</h1>
+
+<p align="center">
+  <a href="https://www.nuget.org/packages/Flaggi">
+    <img src="https://img.shields.io/nuget/v/Flaggi.svg" alt="NuGet">
+  </a>
+  <a href="https://www.nuget.org/packages/Flaggi">
+    <img src="https://img.shields.io/nuget/dt/Flaggi.svg" alt="NuGet Downloads">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+  </a>
+</p>
 
 Flaggi is a **pure and extensible feature flag engine for .NET**.
 It aims to make feature management simple, predictable and self-contained.
