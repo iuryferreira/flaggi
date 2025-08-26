@@ -1,25 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Multi-target frameworks -->
     <TargetFrameworks>net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
 
-  <PropertyGroup Label="Package Description">
-    <PackageId>Flaggi.Extensions.Configuration</PackageId>
-    <Version>1.0.0</Version>
-    <Authors>Iury</Authors>
-    <Company></Company>
-    <Product>Flaggi.Extensions.Configuration</Product>
-    <Description>Configuration integration for Flaggi feature flags. Provides a
-      ConfigurationFeatureStore that binds features from IConfiguration.</Description>
-    <PackageTags>feature-flags configuration appsettings azure-app-configuration flaggi</PackageTags>
-    <RepositoryUrl>https://github.com/iuryferreira/flaggi</RepositoryUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <!-- NuGet build config -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>..\..\artifacts\packages</PackageOutputPath>
+
+    <!-- Assembly info -->
+    <AssemblyName>Flaggi.Extensions.Configuration</AssemblyName>
+    <RootNamespace>Flaggi.Extensions.Configuration</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Metadata">
+    <PackageId>Flaggi.Extensions.Configuration</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Iury Ferreira</Authors>
+    <Company></Company>
+    <Product>Flaggi.Extensions.Configuration</Product>
+    <Description>Configuration integration for Flaggi feature flags.
+      Provides a ConfigurationFeatureStore that binds features from IConfiguration
+      (e.g. appsettings.json, environment variables, Azure App Configuration).</Description>
+    <PackageTags>feature-flags configuration appsettings azure-app-configuration flaggi</PackageTags>
+    <RepositoryUrl>https://github.com/iuryferreira/flaggi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/iuryferreira/flaggi</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +42,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
