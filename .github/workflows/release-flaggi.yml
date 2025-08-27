@@ -25,17 +25,7 @@ jobs:
         id: get_version
         run: |
           VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" src/Flaggi/Flaggi.csproj)
-          echo "version=v$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Create / Update tags
-        uses: cssnr/update-version-tags-action@v1.2.0
-        with:
-          tag: ${{ steps.get_version.outputs.version }}
-          major: true
-          minor: true
-          tags: |
-            latest
-          token: ${{ secrets.GH_PAT }}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Generate changelog
         id: changelog
