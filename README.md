@@ -283,9 +283,6 @@ builder.Services
     .AddFromConfiguration(builder.Configuration);
 ```
 
-Boa! Mantive o estilo uniforme do seu README, deixando essa parte de **Blazor Integration** bem organizada com headings, exemplos em código e listas para boas práticas. Veja como ficou:
-
-
 ## 🕸️ Blazor Integration
 
 The **`Flaggi.Extensions.BlazorWasm`** package simplifies feature gating in **Blazor WebAssembly**.
