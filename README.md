@@ -114,7 +114,7 @@ All are available on **NuGet**.
 
   * **Description:** The heart of Flaggi: feature engine, `Feature`, `FeatureRule`, `FeatureContext`, rule evaluation pipeline, and the in-memory store.
   * **Use cases:** Use this if you want the **bare metal** experience: build your own stores, register evaluators manually, run in console apps, Unity, background services, or test projects without DI.
-  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.Core.svg)](https://www.nuget.org/packages/Flaggi)
+  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.svg)](https://www.nuget.org/packages/Flaggi)
 
 * **Flaggi.Extensions.Configuration**
 
