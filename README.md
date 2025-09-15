@@ -110,13 +110,29 @@ Flaggi separates feature management into **three concepts**:
 Flaggi is split into **focused extension packages** so you only add what you actually need.
 All are available on **NuGet**.
 
-| Package                                   | Description                                                                                                                         | Use cases                                                                                                                                                                             | NuGet                                                                                                                                                      |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Flaggi.Core**                           | The heart of Flaggi: feature engine, `Feature`, `FeatureRule`, `FeatureContext`, rule evaluation pipeline, and the in-memory store. | Use this if you want the **bare metal** experience: build your own stores, register evaluators manually, run in console apps, Unity, background services or test projects without DI. | [![NuGet](https://img.shields.io/nuget/v/Flaggi.Core.svg)](https://www.nuget.org/packages/Flaggi.Core)                                                     |
-| **Flaggi.Extensions.Configuration**       | Adds support for `IConfiguration` (e.g. `appsettings.json`, environment variables).                                                 | Ideal for **ASP.NET Core apps** where features are declared in `appsettings.json` or loaded from environment variables at startup.                                                    | [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.Configuration.svg)](https://www.nuget.org/packages/Flaggi.Extensions.Configuration)             |
-| **Flaggi.Extensions.DependencyInjection** | Provides fluent APIs to register the engine, evaluators and stores via DI.                                                          | Recommended for **ASP.NET Core / Blazor projects** where you want one-liner configuration: `.AddFlaggi().AddDefaultEvaluators().AddFromConfiguration(builder.Configuration)`.         | [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/Flaggi.Extensions.DependencyInjection) |
-| **Flaggi.Extensions.Blazor**              | Components and helpers for Blazor (Server/WASM). Provides `FeatureView` and `IFeatureManager` integration with the UI layer.        | Perfect when you want **UI-driven feature flags** (e.g. hide/show components, beta banners, experimental flows) directly in your Blazor pages.                                        | [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.Blazor.svg)](https://www.nuget.org/packages/Flaggi.Extensions.Blazor)                           |
-                         |
+* **Flaggi**
+
+  * **Description:** The heart of Flaggi: feature engine, `Feature`, `FeatureRule`, `FeatureContext`, rule evaluation pipeline, and the in-memory store.
+  * **Use cases:** Use this if you want the **bare metal** experience: build your own stores, register evaluators manually, run in console apps, Unity, background services, or test projects without DI.
+  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.Core.svg)](https://www.nuget.org/packages/Flaggi)
+
+* **Flaggi.Extensions.Configuration**
+
+  * **Description:** Adds support for `IConfiguration` (e.g., `appsettings.json`, environment variables).
+  * **Use cases:** Ideal for **ASP.NET Core apps** where features are declared in `appsettings.json` or loaded from environment variables at startup.
+  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.Configuration.svg)](https://www.nuget.org/packages/Flaggi.Extensions.Configuration)
+
+* **Flaggi.Extensions.DependencyInjection**
+
+  * **Description:** Provides fluent APIs to register the engine, evaluators, and stores via DI.
+  * **Use cases:** Recommended for **ASP.NET Core / Blazor projects** where you want one-liner configuration: `.AddFlaggi().AddDefaultEvaluators().AddFromConfiguration(builder.Configuration)`.
+  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/Flaggi.Extensions.DependencyInjection)
+
+* **Flaggi.Extensions.Blazor**
+
+  * **Description:** Components and helpers for Blazor (Server/WASM). Provides `FeatureView` and `IFeatureManager` integration with the UI layer.
+  * **Use cases:** Perfect when you want **UI-driven feature flags** (e.g., hide/show components, beta banners, experimental flows) directly in your Blazor pages.
+  * **NuGet:** [![NuGet](https://img.shields.io/nuget/v/Flaggi.Extensions.Blazor.svg)](https://www.nuget.org/packages/Flaggi.Extensions.Blazor)
 
 ⚠️ Each extension package is **optional**.
 Install only what you need.
